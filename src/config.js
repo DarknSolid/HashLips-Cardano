@@ -5,7 +5,7 @@ const { NETWORK } = require(`${basePath}/constants/network.js`);
 const network = NETWORK.eth;
 
 // General metadata for Ethereum
-const namePrefix = "Gooskas";
+const namePrefix = "Test";
 const description = "Gooskas CNFT collection for Cardano";
 const baseUri = "ipfs://NewUriToReplace";
 
@@ -24,7 +24,7 @@ const solanaMetadata = {
 // If you have selected Solana then the collection starts from 0 automatically
 const layerConfigurations = [
   {
-    growEditionSizeTo: 5000,
+    growEditionSizeTo: 10,
     layersOrder: [
       { name: "Backgrounds" },
       { name: "Body" },

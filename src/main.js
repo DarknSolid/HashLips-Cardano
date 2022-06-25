@@ -64,8 +64,7 @@ const cleanDna = (_str) => {
 
 const cleanName = (_str) => {
   let nameWithoutExtension = _str.slice(0, -4);
-  var nameWithoutWeight = nameWithoutExtension.split(rarityDelimiter).shift();
-  return nameWithoutWeight;
+  return nameWithoutExtension.split(rarityDelimiter).shift();
 };
 
 const getElements = (path) => {
@@ -87,7 +86,7 @@ const getElements = (path) => {
 };
 
 const layersSetup = (layersOrder) => {
-  const layers = layersOrder.map((layerObj, index) => ({
+  return layersOrder.map((layerObj, index) => ({
     id: index,
     elements: getElements(`${layersDir}/${layerObj.name}/`),
     name:
@@ -107,12 +106,11 @@ const layersSetup = (layersOrder) => {
         ? layerObj.options?.["bypassDNA"]
         : false,
   }));
-  return layers;
 };
 
 const saveImage = (_editionCount) => {
   fs.writeFileSync(
-    `${buildDir}/images/Gooska #${_editionCount}.png`,
+    `${buildDir}/images/${namePrefix} #${_editionCount}.png`,
     canvas.toBuffer("image/png")
   );
 };
@@ -129,19 +127,6 @@ const drawBackground = () => {
 };
 
 const addMetadata = (_dna, _edition) => {
-  let dateTime = Date.now();
-  // let tempMetadata = {
-  //   name: `${namePrefix} #${_edition}`,
-  //   description: description,
-  //   image: `${baseUri}/${_edition}.png`,
-  //   dna: sha1(_dna),
-  //   edition: _edition,
-  //   date: dateTime,
-  //   ...extraMetadata,
-  //   attributes: attributesList,
-  //   compiler: "HashLips Art Engine",
-  // };
-
   //! Setup metadata skeleton 💀
   let tempMetadata = {
     "edition": _edition,
@@ -170,10 +155,10 @@ const addMetadata = (_dna, _edition) => {
     tempMetadata['721']['<policy_id>']['<asset_name>'][trait_type] = value;
   });
 
-  //! Static value
-  tempMetadata['721']['<policy_id>']['<asset_name>']['Website'] = 'https://gooskas.com';
+  //! Static values. These applies to all NFTs
+  //tempMetadata['721']['<policy_id>']['<asset_name>']['Website'] = 'https://gooskas.com';
   //! Select a random number from 0 to 400
-  tempMetadata['721']['<policy_id>']['<asset_name>']['Number of People Killed'] = Math.round(Math.random() * 400);
+  //tempMetadata['721']['<policy_id>']['<asset_name>']['Number of People Killed'] = Math.round(Math.random() * 400);
 
 
   if (network == NETWORK.sol) {
@@ -352,7 +337,7 @@ const saveMetaDataSingleFile = (_editionCount) => {
   //! Edited for NFT Maker Pro bulk upload!!!
   delete metadata.edition;
   fs.writeFileSync(
-    `${buildDir}/json/Gooska #${_editionCount}.metadata`,
+    `${buildDir}/json/${namePrefix} #${_editionCount}.metadata`,
     JSON.stringify(metadata, null, 2)
   );
 };
